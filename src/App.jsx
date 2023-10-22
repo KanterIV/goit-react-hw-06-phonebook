@@ -1,67 +1,61 @@
-import { useEffect, useState } from 'react';
+// import { useEffect, useState } from 'react';
 import { ContactForm } from 'components/ContactForm/ContactForm';
 import { ContactList } from 'components/ContactList/ContactList';
 import { Filter } from 'components/Filter/Filter';
 import css from './App.module.css';
 
 export const App = () => {
-  const [contacts, setContacts] = useState(
-    () => JSON.parse(localStorage.getItem('contacts')) ?? []
-  );
-  const [filter, setFilter] = useState('');
+  // const [contacts, setContacts] = useState(
+  //   () => JSON.parse(localStorage.getItem('contacts')) ?? []
+  // );
+  // const [filter, setFilter] = useState('');
 
-  const ContactsData = {
-    contacts,
-    filter,
-  };
+  //! const ContactsData = {
+  //   contacts,
+  //   filter,
+  // };
 
-  useEffect(() => {
-    const stringifiedContacts = JSON.stringify(contacts);
-    localStorage.setItem('contacts', stringifiedContacts);
-  }, [contacts]);
+  //! useEffect(() => {
+  //   const stringifiedContacts = JSON.stringify(contacts);
+  //   localStorage.setItem('contacts', stringifiedContacts);
+  // }, [contacts]);
 
-  const handleFilterInputChange = event => {
-    setFilter(event.target.value);
-  };
+  //? const handleFilterInputChange = event => {
+  //?   setFilter(event.target.value);
+  //? };
 
-  const handleAddContact = contactData => {
-    const hasContactDuplicate = contacts.some(
-      contact => contact.name.toLowerCase() === contactData.name.toLowerCase()
-    );
+  //? const handleAddContact = contactData => {
+  //?   const hasContactDuplicate = contacts.some(
+  //?     contact => contact.name.toLowerCase() === contactData.name.toLowerCase()
+  //?   );
 
-    if (hasContactDuplicate) {
-      alert(`${contactData.name} is already in contacts`);
-      return;
-    }
+  //?   if (hasContactDuplicate) {
+  //?     alert(`${contactData.name} is already in contacts`);
+  //?     return;
+  //?   }
 
-    setContacts(prevState => {
-      return [...prevState, contactData];
-    });
-  };
+  //?   setContacts(prevState => {
+  //?     return [...prevState, contactData];
+  //?   });
+  //? };
 
-  const onDeleteBtnClick = contactId => {
-    setContacts(prevState => {
-      return prevState.filter(contact => contact.id !== contactId);
-    });
-  };
+  //? const onDeleteBtnClick = contactId => {
+  //?   setContacts(prevState => {
+  //?     return prevState.filter(contact => contact.id !== contactId);
+  //?   });
+  //? };
 
-  const filterContactsArr = contacts.filter(contact => {
-    return contact.name.toLowerCase().includes(filter.toLowerCase());
-  });
+  //? const filterContactsArr = contacts.filter(contact => {
+  //?   return contact.name.toLowerCase().includes(filter.toLowerCase());
+  //? });
 
   return (
     <div className={css.wrapper}>
       <h1 className={css.formTitle}>Phonebook</h1>
-      <ContactForm handleAddContact={handleAddContact} />
+      <ContactForm />
       <h2>Contacts</h2>
-      <Filter
-        handleInputChange={handleFilterInputChange}
-        ContactsData={ContactsData}
-      />
-      <ContactList
-        contactsArr={filterContactsArr}
-        deleteContact={onDeleteBtnClick}
-      />
+      <Filter />
+      <ContactList />
     </div>
   );
 };

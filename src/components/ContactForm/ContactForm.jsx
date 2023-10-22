@@ -1,10 +1,15 @@
 import { useState } from 'react';
 import { nanoid } from 'nanoid';
 import css from './ContactForm.module.css';
+import { useDispatch, useSelector } from 'react-redux';
+import { addContact } from 'redux/contactsReducer';
 
-export const ContactForm = ({ handleAddContact }) => {
+export const ContactForm = () => {
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
+
+  const dispatch = useDispatch();
+  const contacts = useSelector(state => state.contacts.contacts);
 
   const handleContactsInputChange = event => {
     switch (event.target.name) {
@@ -19,6 +24,19 @@ export const ContactForm = ({ handleAddContact }) => {
       default:
         return;
     }
+  };
+
+  const handleAddContact = contactData => {
+    const hasContactDuplicate = contacts.some(
+      contact => contact.name.toLowerCase() === contactData.name.toLowerCase()
+    );
+
+    if (hasContactDuplicate) {
+      alert(`${contactData.name} is already in contacts`);
+      return;
+    }
+
+    dispatch(addContact(contactData));
   };
 
   const handleSubmit = event => {
